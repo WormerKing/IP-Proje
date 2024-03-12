@@ -287,7 +287,7 @@ CREATE TABLE `Backend_Project`.`products_logs` (
 	`description` TEXT NOT NULL ,
 	`rank` INT NOT NULL ,
 	`is_active` BOOLEAN NOT NULL ,
-	`created_at,` TIMESTAMP NOT NULL ,
+	`created_at` TIMESTAMP NOT NULL ,
 	PRIMARY KEY (`id`)
 ) ENGINE = InnoDB;
 
