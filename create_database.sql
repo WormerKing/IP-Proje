@@ -282,6 +282,7 @@ CREATE TABLE `Backend_Project`.`settings_logs` (
 -- create products
 CREATE TABLE `Backend_Project`.`products_logs` (
 	`id` INT NOT NULL AUTO_INCREMENT ,
+<<<<<<< HEAD
 	`product_id` INT,
 	`trigger` VARCHAR(15) NOT NULL,
 	`before_img_url` VARCHAR(50),
@@ -294,6 +295,13 @@ CREATE TABLE `Backend_Project`.`products_logs` (
 	`after_description` TEXT,
 	`after_rank` INT  ,
 	`after_is_active` BOOLEAN,
+=======
+	`img_url` VARCHAR(50) NOT NULL ,
+	`title` VARCHAR(50) NOT NULL ,
+	`description` TEXT NOT NULL ,
+	`rank` INT NOT NULL ,
+	`is_active` BOOLEAN NOT NULL ,
+>>>>>>> 7e93a464d4d9b6658bb7bf8ca33e239c9f515187
 	`created_at` TIMESTAMP NOT NULL ,
 	PRIMARY KEY (`id`)
 ) ENGINE = InnoDB;
