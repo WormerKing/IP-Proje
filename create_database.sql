@@ -282,12 +282,19 @@ CREATE TABLE `Backend_Project`.`settings_logs` (
 -- create products
 CREATE TABLE `Backend_Project`.`products_logs` (
 	`id` INT NOT NULL AUTO_INCREMENT ,
-	`img_url` VARCHAR(50) NOT NULL ,
-	`title` VARCHAR(50) NOT NULL ,
-	`description` TEXT NOT NULL ,
-	`rank` INT NOT NULL ,
-	`is_active` BOOLEAN NOT NULL ,
-	`created_at,` TIMESTAMP NOT NULL ,
+	`product_id` INT,
+	`trigger` VARCHAR(15) NOT NULL,
+	`before_img_url` VARCHAR(50),
+	`before_title` VARCHAR(50),
+	`before_description` TEXT,
+	`before_rank` INT  ,
+	`before_is_active` BOOLEAN,
+	`after_img_url` VARCHAR(50),
+	`after_title` VARCHAR(50),
+	`after_description` TEXT,
+	`after_rank` INT  ,
+	`after_is_active` BOOLEAN,
+	`created_at` TIMESTAMP NOT NULL ,
 	PRIMARY KEY (`id`)
 ) ENGINE = InnoDB;
 
@@ -370,7 +377,22 @@ values(
 -- users_logs update
 
 CREATE TRIGGER `Backend_Project`.`trg_users_update` AFTER UPDATE ON `users` for each row
-insert into `Backend_Project`.`users_logs` 
+insert into `Backend_Project`.`users_logs`(
+	user_id,
+	`trigger`,
+	before_img_url,
+	before_email,
+	before_name,
+	before_surname,
+	before_password,
+	before_is_active,
+	after_img_url,
+	after_email,
+	after_name,
+	after_surname,
+	after_password,
+	after_is_active
+)
 values(
 	OLD.id,
 	'updated',
@@ -403,7 +425,7 @@ insert into `Backend_Project`.`users_logs`(
 )
 values(
 	OLD.id,
-	'updated',
+	'deleted',
 	OLD.img_url,
 	OLD.email,
 	OLD.name,
@@ -434,11 +456,22 @@ values(
 
 -- brands_logs update
 CREATE TRIGGER `Backend_Project`.`trg_brands_update` AFTER UPDATE ON `brands` for each row
-insert into `Backend_Project`.`brands_logs` 
+insert into `Backend_Project`.`brands_logs`(
+	brand_id,
+	`trigger`,
+	before_img_url,
+	before_title,
+	before_rank,
+	before_is_active,
+	after_img_url,
+	after_title,
+	after_rank,
+	after_is_active
+)
 
 values(
 		NEW.id,
-		`updated`,
+		'updated',
 		OLD.img_url,
 		OLD.title,
 		OLD.rank,
@@ -472,7 +505,7 @@ values(
 -- products_logs insert
 CREATE TRIGGER `Backend_Project`.`trg_products_insert` AFTER INSERT ON `products` for each row
 insert into `Backend_Project`.`products_logs`(
-	brand_id,
+	product_id,
 	`trigger`,
 	after_img_url,
 	after_title,
@@ -491,7 +524,18 @@ values(
 
 -- products_logs update
 CREATE TRIGGER `Backend_Project`.`trg_products_update` AFTER UPDATE ON `products` for each row
-insert into `Backend_Project`.`products_logs` 
+insert into `Backend_Project`.`products_logs`(
+	product_id,
+	`trigger`,
+	before_img_url,
+	before_title,
+	before_rank,
+	before_is_active,
+	after_img_url,
+	after_title,
+	after_rank,
+	after_is_active
+)
 
 values(
 	OLD.id,
@@ -519,7 +563,7 @@ insert into `Backend_Project`.`products_logs`(
 
 values(
 	OLD.id,
-	'updated',
+	'deleted',
 	OLD.img_url,
 	OLD.title,
 	OLD.rank,
@@ -550,7 +594,20 @@ values(
 
 -- product_images_logs update
 CREATE TRIGGER `Backend_Project`.`trg_product_images_update` AFTER UPDATE ON `product_images` for each row
-insert into `Backend_Project`.`product_images_logs`
+insert into `Backend_Project`.`product_images_logs`(
+	product_image_id,
+	`trigger`,
+	before_product_id,
+	before_rank,
+	before_img_url,
+	before_is_cover,
+	before_is_active,
+	after_product_id,
+	after_rank,
+	after_img_url,
+	after_is_cover,
+	after_is_active
+)
 
 values(
 	NEW.id,
@@ -613,11 +670,24 @@ values(
 
 -- references_logs update
 CREATE TRIGGER `Backend_Project`.`trg_references_update` AFTER UPDATE ON `references` for each row
-insert into `Backend_Project`.`references_logs`
+insert into `Backend_Project`.`references_logs`(
+	reference_id,
+	`trigger`,
+	before_img_url,
+	before_title,
+	before_description,
+	before_rank,
+	before_is_active,
+	after_img_url,
+	after_title,
+	after_description,
+	after_rank,
+	after_is_active
+)
 
 values(
 	NEW.id,
-	'inserted',
+	'updated',
 	OLD.img_url,
 	OLD.title,
 	OLD.description,
@@ -678,7 +748,22 @@ values(
 
 -- services_logs update
 CREATE TRIGGER `Backend_Project`.`trg_services_update` AFTER UPDATE ON `services` for each row
-insert into `Backend_Project`.`services_logs`
+insert into `Backend_Project`.`services_logs`(
+	service_id,
+	`trigger`,
+	before_img_url,
+	before_title,
+	before_url,
+	before_description,
+	before_rank,
+	before_is_active,
+	after_img_url,
+	after_title,
+	after_url,
+	after_description,
+	after_rank,
+	after_is_active
+)
 
 values(
 	NEW.id,
@@ -773,7 +858,48 @@ values(
 
 -- setting_logs update
 CREATE TRIGGER `Backend_Project`.`trg_settings_update` AFTER UPDATE ON `settings` for each row
-insert into `Backend_Project`.`settings_logs`
+insert into `Backend_Project`.`settings_logs`(
+	setting_id,
+	`trigger`,
+	before_company_name,
+	before_adress,
+	before_about_us,
+	before_slogan,
+	before_mission,
+	before_vision,
+	before_img_url,
+	before_mobile_img_url,
+	before_favicon,
+	before_phone_one,
+	before_phone_two,
+	before_email,
+	before_facebook,
+	before_twitter,
+	before_instagram,
+	before_linkedin,
+	before_is_active,
+	before_gsm_one,
+	before_gsm_two,
+	after_company_name,
+	after_adress,
+	after_about_us,
+	after_slogan,
+	after_mission,
+	after_vision,
+	after_img_url,
+	after_mobile_img_url,
+	after_favicon,
+	after_phone_one,
+	after_phone_two,
+	after_email,
+	after_facebook,
+	after_twitter,
+	after_instagram,
+	after_linkedin,
+	after_is_active,
+	after_gsm_one,
+	after_gsm_two
+)
 
 values(
 	NEW.id,
@@ -896,7 +1022,24 @@ values(
 
 -- testiminals_logs update
 CREATE TRIGGER `Backend_Project`.`trg_testiminals_update` AFTER UPDATE ON `testimanials` for each row
-insert into `Backend_Project`.`testimanials_logs`
+insert into `Backend_Project`.`testimanials_logs`(
+	testimanial_id,
+	`trigger`,
+	before_title,
+	before_description,
+	before_full_name,
+	before_company,
+	before_img_url,
+	before_rank,
+	before_is_active,
+	after_title,
+	after_description,
+	after_full_name,
+	after_company,
+	after_img_url,
+	after_rank,
+	after_is_active
+)
 
 values(
 	NEW.id,
