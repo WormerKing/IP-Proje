@@ -11,6 +11,16 @@ CREATE DATABASE `Backend_Project` CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 -- create tables
 -- #################################################################################################
+-- create branches
+
+CREATE TABLE `Backend_Project`.`branches` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`title` VARCHAR(250) NOT NULL,
+	`adress` VARCHAR(250) NOT NULL,
+	`created_at` TIMESTAMP NOT NULL,
+	PRIMARY KEY (`id`) 
+) ENGINE = InnoDB;
+
 -- create users
 CREATE TABLE `Backend_Project`.`users` (
 	`id` INT NOT NULL AUTO_INCREMENT ,
@@ -144,6 +154,19 @@ CREATE TABLE `Backend_Project`.`product_images` (
 -- #################################################################################################
 
 -- create logs tables
+-- create branches
+CREATE TABLE `Backend_Project`.`branches_logs` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`branch_id` INT,
+	`trigger` VARCHAR(15) NOT NULL,
+	`before_title` VARCHAR(250),
+	`before_adress` VARCHAR(250),
+	`after_title` VARCHAR(250),
+	`after_adress` VARCHAR(250),
+	`created_at` TIMESTAMP NOT NULL,
+	PRIMARY KEY (`id`) 
+) ENGINE = InnoDB;
+
 -- create users
 CREATE TABLE `Backend_Project`.`users_logs` (
 	`id` INT NOT NULL AUTO_INCREMENT ,
@@ -282,7 +305,6 @@ CREATE TABLE `Backend_Project`.`settings_logs` (
 -- create products
 CREATE TABLE `Backend_Project`.`products_logs` (
 	`id` INT NOT NULL AUTO_INCREMENT ,
-<<<<<<< HEAD
 	`product_id` INT,
 	`trigger` VARCHAR(15) NOT NULL,
 	`before_img_url` VARCHAR(50),
@@ -355,6 +377,59 @@ CREATE TABLE `Backend_Project`.`product_images_logs` (
 -- ##################################################################################################
 
 -- create triggers
+
+-- branches_logs insert
+
+CREATE TRIGGER `Backend_Project`.`trg_branches_insert` AFTER INSERT ON `branches` for each row
+insert into `Backend_Project`.`branches_logs`(
+	branch_id,
+	`trigger`,
+	`after_title`,
+	`after_adress`
+)
+
+values(
+	NEW.id,
+	'inserted',
+	NEW.title,
+	NEW.adress
+);
+
+-- branches_logs update
+CREATE TRIGGER `Backend_Project`.`trg_branches_update` AFTER UPDATE ON `branches` for each row
+insert into `Backend_Project`.`branches_logs`(
+	branch_id,
+	`trigger`,
+	`before_title`,
+	`before_adress`,
+	`after_title`,
+	`after_adress`,
+)
+
+values(
+	NEW.id,
+	'updated',
+	OLD.title,
+	OLD.adress,
+	NEW.title,
+	NEW.adress
+);
+
+-- branches_logs delete
+CREATE TRIGGER `Backend_Project`.`trg_branches_delete` AFTER DELETE ON `branches` for each row
+insert into `Backend_Project`.`branches_logs`(
+	branch_id,
+	`trigger`,
+	`before_title`,
+	`before_adress`
+)
+
+values(
+	OLD.id,
+	'deleted',
+	OLD.title,
+	OLD.adress
+);
 
 -- users_logs insert
 CREATE TRIGGER `Backend_Project`.`trg_users_insert` AFTER INSERT ON `users` for each row
