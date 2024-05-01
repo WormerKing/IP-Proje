@@ -403,7 +403,7 @@ insert into `Backend_Project`.`branches_logs`(
 	`before_title`,
 	`before_adress`,
 	`after_title`,
-	`after_adress`,
+	`after_adress`
 )
 
 values(

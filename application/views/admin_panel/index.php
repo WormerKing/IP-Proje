@@ -42,7 +42,7 @@
   <?php $this->load->view("admin_panel/layouts/sidebar");?>
 
   <!-- Content Wrapper. Contains page content -->
-  <?php $this->load->view("admin_panel/pages/".$page);?>
+  <?php $this->load->view("admin_panel/".implode("/", $pages));?>
   <!-- /.content-wrapper -->
   <?php $this->load->view("admin_panel/layouts/footer");?>
 
@@ -88,5 +88,12 @@
 <script src="<?php echo base_url('assets/')?>dist/js/demo.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="<?php echo base_url('assets/')?>dist/js/pages/dashboard.js"></script>
+<?php if ($this->session->flashdata("message")) {?>
+<script>
+  document.addEventListener("DOMContentLoaded",() => {
+    alert('<?php echo $this->session->flashdata("message")?>');
+  },false);
+</script>
+<?php }?>
 </body>
 </html>
