@@ -5,11 +5,12 @@ class Welcome extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->load->model("Branch_Model");
+		$this->load->library("session");
 	}
 
 
 	public function index() {
-		$array = array("page" => "main_page");
+		$array = array("pages" => array("pages","main_page"));
 		$this->load->view('admin_panel/index',$array);
 	}
 
@@ -17,7 +18,7 @@ class Welcome extends CI_Controller {
 		$branches = $this->Branch_Model->getAllBranches();
 		$array = array(
 			"branches" => $branches,
-			"page" => "list_branches"
+			"pages" => array("pages","list_branches")
 		);
 
 		$this->load->view('admin_panel/index',$array);
