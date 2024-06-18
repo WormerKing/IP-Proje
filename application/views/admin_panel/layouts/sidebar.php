@@ -13,7 +13,7 @@
           <img src="<?php echo base_url('assets/')?>dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
+          <a href="#" class="d-block"><?php echo $this->session->userdata("name")?></a>
         </div>
       </div>
 
@@ -43,6 +43,12 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="<?php echo base_url("login/logout")?>" class="nav-link bg-danger">
+                  <i class="far nav-icon"></i>
+                  <p>Çıkış yap</p>
+                </a>
+              </li>
               <li class="nav-item">
                 <a href="./index.html" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>

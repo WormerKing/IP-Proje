@@ -5,6 +5,9 @@
 			$this->load->model("User_Model");
 			$this->load->library("session");
 			$this->load->library("form_validation");
+			if (!$this->session->userdata("logged_in")) {
+				redirect(base_url("login/index"));
+			}
 		}
 
 		public function index() {

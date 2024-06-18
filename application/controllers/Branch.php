@@ -5,6 +5,9 @@
 			$this->load->model("Branch_Model");
 			$this->load->library("form_validation");
 			$this->load->library("session");
+			if (!$this->session->userdata("logged_in")) {
+				redirect(base_url("login/index"));
+			}
 		}
 
 		public function index() {
